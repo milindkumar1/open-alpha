@@ -37,8 +37,8 @@ class Backtester:
         # Generate signals
         signals = strategy.generate_signals(data)
         
-        # Calculate positions (forward-fill signals)
-        positions = signals.replace(0, np.nan).fillna(method='ffill').fillna(0)
+        # Calculate positions (forward-fill signals) - Fix deprecated method
+        positions = signals.replace(0, np.nan).ffill().fillna(0)
         
         # Calculate returns
         returns = data['close'].pct_change()
@@ -49,8 +49,15 @@ class Backtester:
         commission_costs = trades * self.commission
         strategy_returns = strategy_returns - commission_costs
         
+        # Remove NaN values before calculating equity curve
+        strategy_returns = strategy_returns.fillna(0)
+        
         # Calculate equity curve
         equity_curve = (1 + strategy_returns).cumprod() * self.initial_capital
+        
+        # Ensure equity curve starts with initial capital
+        if len(equity_curve) > 0 and pd.isna(equity_curve.iloc[0]):
+            equity_curve.iloc[0] = self.initial_capital
         
         # Generate trade log
         trade_signals = signals[signals != 0]

@@ -4,9 +4,9 @@ from pydantic import BaseModel
 from typing import Dict, Any, Optional
 import uvicorn
 
-from openalpha.data import market_data
-from openalpha.strategies import get_strategy, STRATEGIES
-from openalpha.backtest import Backtester
+from src.data import market_data
+from src.strategies import get_strategy, STRATEGIES
+from src.backtest import Backtester
 
 # Initialize FastAPI app
 app = FastAPI(

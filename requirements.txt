@@ -1,7 +1,7 @@
 # Core data and computation
 pandas>=2.0.0
 numpy>=1.24.0
-yfinance>=0.2.18
+requests>=2.31.0
 
 # API and web framework
 fastapi>=0.104.0
@@ -12,3 +12,7 @@ pydantic>=2.5.0
 python-dotenv>=1.0.0
 typer>=0.9.0
 rich>=13.0.0
+
+# Trading and broker integration
+alpaca-trade-api>=3.0.0
+pytz>=2023.3
